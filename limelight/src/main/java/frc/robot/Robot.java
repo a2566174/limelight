@@ -108,12 +108,12 @@ public class Robot extends TimedRobot {
   x =  table.getEntry("tx").getDouble(0.0);
   double heading_error = -x;
   
-  if (x > 1.0)
+  if (x > 0.5)
   {
     steering_adjust = Kp*heading_error; 
        
   }
-  else if (x < 1.0)
+  else if (x < 0.5)
   {
     steering_adjust = Kp*heading_error;
   }
