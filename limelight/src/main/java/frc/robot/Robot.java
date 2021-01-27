@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
   {
     steering_adjust = Kp*heading_error;
   }
-  steering_adjust = Kp * tx;
+  steering_adjust = Kp * x;
   left_command+=steering_adjust;
   right_command-=steering_adjust;
 }
