@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
    WPI_TalonSRX bLMotor = new WPI_TalonSRX(9);
    WPI_TalonSRX fLMotor = new WPI_TalonSRX(0);
    double steering_adjust = 0.0;
-  
+   XboxController xbox = new XboxController(0);
   @Override
   public void robotInit() {
     bRMotor.configFactoryDefault();
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     double Kp = -0.03d;  //cabom
-    XboxController xbox = new XboxController(0);
+    
     
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
@@ -108,22 +108,20 @@ public class Robot extends TimedRobot {
   x =  table.getEntry("tx").getDouble(0.0);
   double heading_error = -x;
   
-  if (x > 0.5)
+  if (x < 1 && x > -1)
   {
-    steering_adjust = Kp*heading_error; 
-       
+    steering_adjust = 0; 
   }
-  else if (x < 0.5)
+  else
   {
-    steering_adjust = Kp*heading_error;
+    steering_adjust = -Kp*heading_error;
   }
   steering_adjust = Kp * x;
-  left_command+=steering_adjust;
-  right_command-=steering_adjust;
+  left_command=steering_adjust;
+  right_command=-steering_adjust;
 }
 tankDrive(left_command,right_command);
 SmartDashboard.putNumber("moteroutput",steering_adjust);
-
 }
 
 
