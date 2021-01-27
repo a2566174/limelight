@@ -13,11 +13,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import operatorControl;
-public class Robot extends TimedRobot {
 
-//hahaha
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-hank");
+public class Robot extends TimedRobot {
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-unicron");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
@@ -27,6 +25,8 @@ public class Robot extends TimedRobot {
    WPI_TalonSRX fLMotor = new WPI_TalonSRX(0);
    double steering_adjust = 0.0;
    XboxController xbox = new XboxController(0);
+   double left_command;
+   double right_command;
   @Override
   public void robotInit() {
     bRMotor.configFactoryDefault();
@@ -45,10 +45,6 @@ public class Robot extends TimedRobot {
     fLMotor.configPeakOutputReverse(-0.2,10);
     bRMotor.configPeakOutputReverse(-0.2,10);
     bLMotor.configPeakOutputReverse(-0.2,10);
-  
-   fRMotor.config_kF(0,0.01,30);
-   fLMotor.config_kF(0,0.01,30);
-   
   }
 
   /**
@@ -102,7 +98,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
 
-  if (xbox.getRawButton(1))
+
+    if (xbox.getRawButton(1))
   {
   //float min_command = 0;
   x =  table.getEntry("tx").getDouble(0.0);
@@ -122,11 +119,15 @@ public class Robot extends TimedRobot {
 }
 tankDrive(left_command,right_command);
 SmartDashboard.putNumber("moteroutput",steering_adjust);
+
 }
 
 
 
-  /** This function is called periodically when disabled. */
+  private void tankDrive(double left_command, double right_command) {
+}
+
+/** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {}
 
